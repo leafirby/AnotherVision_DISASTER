@@ -109,18 +109,22 @@ public:
 		}
 		else if (m_volcanoButton.leftClicked())
 		{
+
 			changeScene(State::volcano);
 		}
 		else if (m_driftwoodButton.leftClicked())
 		{
+
 			changeScene(State::driftwood);
 		}
 		else if (m_treeButton.leftClicked())
 		{
+
 			changeScene(State::tree);
 		}
 		else if (m_starButton.leftClicked())
 		{
+
 			changeScene(State::star);
 		}
 		else if (m_staffTransition.value() == 1 && m_staffButton.leftClicked()) 
@@ -181,6 +185,8 @@ public:
 
 	}
 
+	const double tim = Scene::Time();
+
 	void update() override
 	{
 		m_exitTransition.update(m_exitButton.mouseOver());
@@ -198,22 +204,48 @@ public:
 			changeScene(State::Title);
 		}
 
-		if (getData().flag == 1 && getData().zoomf < 2 && m_zoominButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf < 9 && m_zoominButton.leftClicked())
 		{
 			getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf > 1 && m_zoomoutButton.leftClicked())
 		{
 			getData().zoomf -= 1;
 		}
 	}
 
 	void draw() const override
-	{
-		if (getData().zoomf == 0) getData().texture_main_1.draw();
+	{	
+		if (getData().zoomf == 0)
+		{
+			const double deltim = Scene::Time() - tim;
+
+			if (deltim < 0.4) getData().texture_main_1.draw();
+			else if (deltim < 0.8) getData().texture_main_2.draw();
+			else if (deltim < 1.2) getData().texture_main_3.draw();
+			else if (deltim < 1.6) getData().texture_main_4.draw();
+			else if (deltim < 2.0) getData().texture_main_5.draw();
+			else if (deltim < 2.4) getData().texture_main_6.draw();
+			else if (deltim < 2.8) getData().texture_main_7.draw();
+			else if (deltim < 3.2) getData().texture_main_8.draw();
+			else if (deltim < 3.6) getData().texture_main_9.draw();
+			else if (deltim < 4.0) getData().texture_main_10.draw();
+			else if (deltim < 4.4) getData().texture_main_11.draw();
+			else
+			{
+				getData().zoomf = 1;
+			}
+		}
 		else if (getData().zoomf == 1) getData().texture_lab_1.draw();
 		else if (getData().zoomf == 2) getData().texture_lab_2.draw();
+		else if (getData().zoomf == 3) getData().texture_lab_3.draw();
+		else if (getData().zoomf == 4) getData().texture_lab_4.draw();
+		else if (getData().zoomf == 5) getData().texture_lab_5.draw();
+		else if (getData().zoomf == 6) getData().texture_lab_6.draw();
+		else if (getData().zoomf == 7) getData().texture_lab_7.draw();
+		else if (getData().zoomf == 8) getData().texture_lab_8.draw();
+		else if (getData().zoomf == 9) getData().texture_lab_9.draw();
 
 		FontAsset(U"TitleFont")(U"研究所")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
@@ -226,40 +258,15 @@ public:
 		FontAsset(U"Menu")(U"拡大する").drawAt(m_zoominButton.center(), ColorF{ 0.25 });
 		FontAsset(U"Menu")(U"縮小する").drawAt(m_zoomoutButton.center(), ColorF{ 0.25 });
 
-		/*
-			const RoundRect rr{ 50, 60, 300, 80, 40 };
-			rr.drawShadow(Vec2{ 4, 4 }, 20, 0)
-				.draw();
-
-			Circle{ rr.rect.pos.movedBy(rr.r, rr.r), rr.r }
-				.stretched(-5)
-				.draw(HSV{ 40, 0.5, 1.0 });
-
-			font(U"拡大する").draw({ 160, 80, 300, 80 }, ColorF{ 0.25 });
-
-			const RoundRect rr2{ 50, 160, 300, 80, 40 };
-			rr2.drawShadow(Vec2{ 4, 4 }, 20, 0)
-				.draw(ColorF{ 0.8 });
-
-			Circle{ rr2.rect.pos.movedBy(rr2.r, rr2.r), rr2.r }
-				.stretched(-5)
-				.draw(HSV{ 40, 0.5, 1.0 });
-
-			font(U"縮小する").draw({ 160, 180, 300, 80 }, ColorF{ 0.25 });
-
-			Circle{ Cursor::Pos(), 40 }.draw(ColorF{ 0.0, 0.5, 1.0, 0.6 });
-		}
-		*/
-
 	}
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-400, -400), 300, 60 };
+	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-400, -300), 300, 60 };
+	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-400, -200), 300, 60 };
+	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -274,6 +281,8 @@ public:
 
 	}
 
+	const double tim = Scene::Time();
+
 	void update() override
 	{
 		m_exitTransition.update(m_exitButton.mouseOver());
@@ -291,22 +300,42 @@ public:
 			changeScene(State::Title);
 		}
 
-		if (getData().flag == 1 && getData().zoomf < 2 && m_zoominButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf < 3 && m_zoominButton.leftClicked())
 		{
 			getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf > 1 && m_zoomoutButton.leftClicked())
 		{
 			getData().zoomf -= 1;
 		}
 	}
 
 	void draw() const override
-	{
-		if (getData().zoomf == 0) getData().texture_main_1.draw();
+	{	
+		if (getData().zoomf == 0)
+		{
+			const double deltim = Scene::Time() - tim;
+
+			if (deltim < 0.4) getData().texture_main_1.draw();
+			else if (deltim < 0.8) getData().texture_main_2.draw();
+			else if (deltim < 1.2) getData().texture_main_3.draw();
+			else if (deltim < 1.6) getData().texture_main_4.draw();
+			else if (deltim < 2.0) getData().texture_main_5.draw();
+			else if (deltim < 2.4) getData().texture_main_6.draw();
+			else if (deltim < 2.8) getData().texture_main_7.draw();
+			else if (deltim < 3.2) getData().texture_main_8.draw();
+			else if (deltim < 3.6) getData().texture_main_9.draw();
+			else if (deltim < 4.0) getData().texture_main_10.draw();
+			else if (deltim < 4.4) getData().texture_main_11.draw();
+			else
+			{
+				getData().zoomf = 1;
+			}
+		}
 		else if (getData().zoomf == 1) getData().texture_volcano_1.draw();
 		else if (getData().zoomf == 2) getData().texture_volcano_2.draw();
+		else if (getData().zoomf == 3) getData().texture_volcano_3.draw();
 
 		FontAsset(U"TitleFont")(U"火山")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
@@ -323,11 +352,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-400, -400), 300, 60 };
+	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-400, -300), 300, 60 };
+	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-400, -200), 300, 60 };
+	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -379,11 +408,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-400, -400), 300, 60 };
+	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-400, -300), 300, 60 };
+	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-400, -200), 300, 60 };
+	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -397,6 +426,8 @@ public:
 	{
 
 	}
+
+	const double tim = Scene::Time();
 
 	void update() override
 	{
@@ -415,22 +446,42 @@ public:
 			changeScene(State::Title);
 		}
 
-		if (getData().flag == 1 && getData().zoomf < 2 && m_zoominButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf < 3 && m_zoominButton.leftClicked())
 		{
 			getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
+		if (getData().flag == 1 && getData().zoomf > 1 && m_zoomoutButton.leftClicked())
 		{
 			getData().zoomf -= 1;
 		}
 	}
 
 	void draw() const override
-	{
-		if (getData().zoomf == 0) getData().texture_main_1.draw();
+	{	
+		if (getData().zoomf == 0)
+		{
+			const double deltim = Scene::Time() - tim;
+
+			if (deltim < 0.4) getData().texture_main_1.draw();
+			else if (deltim < 0.8) getData().texture_main_2.draw();
+			else if (deltim < 1.2) getData().texture_main_3.draw();
+			else if (deltim < 1.6) getData().texture_main_4.draw();
+			else if (deltim < 2.0) getData().texture_main_5.draw();
+			else if (deltim < 2.4) getData().texture_main_6.draw();
+			else if (deltim < 2.8) getData().texture_main_7.draw();
+			else if (deltim < 3.2) getData().texture_main_8.draw();
+			else if (deltim < 3.6) getData().texture_main_9.draw();
+			else if (deltim < 4.0) getData().texture_main_10.draw();
+			else if (deltim < 4.4) getData().texture_main_11.draw();
+			else
+			{
+				getData().zoomf = 1;
+			}
+		}
 		else if (getData().zoomf == 1) getData().texture_tree_1.draw();
 		else if (getData().zoomf == 2) getData().texture_tree_2.draw();
+		else if (getData().zoomf == 3) getData().texture_tree_3.draw();
 
 		FontAsset(U"TitleFont")(U"ヤシの木")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
@@ -447,11 +498,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-400, -400), 300, 60 };
+	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-400, -300), 300, 60 };
+	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-400, -200), 300, 60 };
+	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -503,11 +554,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-400, -400), 300, 60 };
+	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-400, -300), 300, 60 };
+	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-400, -200), 300, 60 };
+	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
