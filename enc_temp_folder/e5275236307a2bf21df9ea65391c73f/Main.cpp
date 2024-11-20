@@ -334,8 +334,7 @@ public:
 			{
 				getData().zoom_lab = 1;
 				getData().flag ^= 1;
-				getData().count = 0;
-
+				
 				if(getData().flag) 
 				{
 					NotificationAddon::Show(U"ズームが有効になりました。", NotificationAddon::Type::Information);
