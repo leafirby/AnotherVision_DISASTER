@@ -374,19 +374,19 @@ public:
 
 private:
 
-	Rect m_labButton{ Arg::center = Scene::Center().movedBy(-300, -150), 350, 100 };
+	RoundRect m_labButton{ Arg::center = Scene::Center().movedBy(-300, -150), 350, 100, 10 };
 	Transition m_labTransition{ 0.4s, 0.2s };
 
-	Rect m_volcanoButton{ Arg::center = Scene::Center().movedBy(300, -150), 350, 100 };
+	RoundRect m_volcanoButton{ Arg::center = Scene::Center().movedBy(300, -150), 350, 100, 10 };
 	Transition m_volcanoTransition{ 0.4s, 0.2s };
 
-	Rect m_driftwoodButton{ Arg::center = Scene::Center().movedBy(-400, 150), 350, 100 };
+	RoundRect m_driftwoodButton{ Arg::center = Scene::Center().movedBy(-400, 150), 350, 100, 10 };
 	Transition m_driftwoodTransition{ 0.4s, 0.2s };
 
-	Rect m_treeButton{ Arg::center = Scene::Center().movedBy(0, 150), 350, 100 };
+	RoundRect m_treeButton{ Arg::center = Scene::Center().movedBy(0, 150), 350, 100, 10 };
 	Transition m_treeTransition{ 0.4s, 0.2s };
 
-	Rect m_starButton{ Arg::center = Scene::Center().movedBy(400, 150), 350, 100 };
+	RoundRect m_starButton{ Arg::center = Scene::Center().movedBy(400, 150), 350, 100, 10 };
 	Transition m_starTransition{ 0.4s, 0.2s };
 
 	Rect m_staffButton{ Arg::center = Scene::Center().movedBy(600, 550), 450, 200 };
@@ -418,10 +418,11 @@ public:
 			getData().zoomf = 0;
 			changeScene(State::Title);
 		}
-
-		if (getData().flag == 1 && getData().zoomf < 23 && m_zoominButton.leftClicked())
+		
+		if (m_zoominButton.leftClicked())
 		{
-			getData().zoomf += 1;
+			if(getData().flag == 1 && getData().zoomf < 23) getData().zoomf += 1;
+			else if(getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
 		}
 
 		if (getData().flag == 1 && getData().zoomf > 1 && m_zoomoutButton.leftClicked())
@@ -481,11 +482,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
+	RoundRect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -380), 400, 80, 10 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
+	RoundRect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -280), 400, 80, 10 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
+	RoundRect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -180), 400, 80, 10 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -517,9 +518,10 @@ public:
 			changeScene(State::Title);
 		}
 
-		if (getData().flag == 1 && getData().zoomf < 16 && m_zoominButton.leftClicked())
+		if (m_zoominButton.leftClicked())
 		{
-			getData().zoomf += 1;
+			if (getData().flag == 1 && getData().zoomf < 16) getData().zoomf += 1;
+			else if (getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
 		}
 
 		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
@@ -549,11 +551,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
+	RoundRect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -380), 400, 80, 10 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
+	RoundRect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -280), 400, 80, 10 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
+	RoundRect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -180), 400, 80, 10 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -605,11 +607,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
+	RoundRect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -380), 400, 80, 10 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
+	RoundRect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -280), 400, 80, 10 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
+	RoundRect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -180), 400, 80, 10 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -640,9 +642,11 @@ public:
 			getData().zoomf = 0;
 			changeScene(State::Title);
 		}
-		if (getData().flag == 1 && getData().zoomf < 16 && m_zoominButton.leftClicked())
+
+		if (m_zoominButton.leftClicked())
 		{
-			getData().zoomf += 1;
+			if (getData().flag == 1 && getData().zoomf < 16) getData().zoomf += 1;
+			else if (getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
 		}
 
 		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
@@ -672,11 +676,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
+	RoundRect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -380), 400, 80, 10 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
+	RoundRect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -280), 400, 80, 10 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
+	RoundRect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -180), 400, 80, 10 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
@@ -728,11 +732,11 @@ public:
 
 private:
 
-	Rect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -440), 400, 80 };
+	RoundRect m_exitButton{ Arg::center = Scene::Center().movedBy(-650, -380), 400, 80, 10 };
 	Transition m_exitTransition{ 0.4s, 0.2s };
-	Rect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -340), 400, 80 };
+	RoundRect m_zoominButton{ Arg::center = Scene::Center().movedBy(-650, -280), 400, 80, 10 };
 	Transition m_zoominTransition{ 0.4s, 0.2s };
-	Rect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -240), 400, 80 };
+	RoundRect m_zoomoutButton{ Arg::center = Scene::Center().movedBy(-650, -180), 400, 80, 10 };
 	Transition m_zoomoutTransition{ 0.4s, 0.2s };
 
 };
