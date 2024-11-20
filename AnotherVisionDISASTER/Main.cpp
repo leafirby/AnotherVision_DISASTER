@@ -445,7 +445,6 @@ public:
 			getData().zoomf = 0;
 			changeScene(State::Title);
 		}
-
 		if (getData().flag == 1 && getData().zoomf < 3 && m_zoominButton.leftClicked())
 		{
 			getData().zoomf += 1;
