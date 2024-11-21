@@ -127,6 +127,7 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //
 //////////////////////////////////////////////////////
 
+Resource(images/main.png)
 Resource(images/main_1.png)
 Resource(images/main_2.png)
 Resource(images/main_3.png)

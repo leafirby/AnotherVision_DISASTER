@@ -218,6 +218,8 @@ struct GameData
 	int zoom_lab = 1;
 	double tim = 0.0;
 
+	const Texture texture_main{ Resource(U"images/main.png") };
+
 	const Texture texture_main_1{ Resource(U"images/main_1.png") };
 
 	const Texture texture_main_2{ Resource(U"images/main_2.png") };
@@ -359,7 +361,7 @@ public:
 
 	void draw() const override
 	{
-		getData().texture_main_1.draw();
+		getData().texture_main.resized(1920, 1080).draw();
 
 		FontAsset(U"TitleFont")(U"望遠鏡")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 400, 100 });
