@@ -304,28 +304,34 @@ public:
 
 		if (m_labButton.leftClicked())
 		{
+			NotificationAddon::Show(U"方向を合わせています。", NotificationAddon::Type::Information);
 			getData().tim = Scene::Time();
 			changeScene(State::lab);
+			NotificationAddon::Show(U"拡大率を合わせています。", NotificationAddon::Type::Information);
 		}
 		else if (m_volcanoButton.leftClicked())
 		{
-
+			NotificationAddon::Show(U"方向を合わせています。", NotificationAddon::Type::Information);
 			changeScene(State::volcano);
+			NotificationAddon::Show(U"拡大率を合わせています。", NotificationAddon::Type::Information);
 		}
 		else if (m_driftwoodButton.leftClicked())
 		{
-
+			NotificationAddon::Show(U"方向を合わせています。", NotificationAddon::Type::Information);
 			changeScene(State::driftwood);
+			NotificationAddon::Show(U"拡大率を合わせています。", NotificationAddon::Type::Information);
 		}
 		else if (m_treeButton.leftClicked())
 		{
-
+			NotificationAddon::Show(U"方向を合わせています。", NotificationAddon::Type::Information);
 			changeScene(State::tree);
+			NotificationAddon::Show(U"拡大率を合わせています。", NotificationAddon::Type::Information);
 		}
 		else if (m_starButton.leftClicked())
 		{
-
+			NotificationAddon::Show(U"方向を合わせています。", NotificationAddon::Type::Information);
 			changeScene(State::star);
+			NotificationAddon::Show(U"拡大率を合わせています。", NotificationAddon::Type::Information);
 		}
 		else if (m_staffButton.leftClicked())
 		{
@@ -338,12 +344,12 @@ public:
 
 				if(getData().flag) 
 				{
-					NotificationAddon::Show(U"ズームが有効になりました。", NotificationAddon::Type::Information);
+					NotificationAddon::Show(U"ズームアウトが有効になりました。", NotificationAddon::Type::Information);
 					NotificationAddon::Show(U"演出が初期化されました。", NotificationAddon::Type::Information);
 				}
 				else
 				{
-					NotificationAddon::Show(U"ズームが無効になりました。", NotificationAddon::Type::Information);
+					NotificationAddon::Show(U"ズームアウトが無効になりました。", NotificationAddon::Type::Information);
 					NotificationAddon::Show(U"演出が初期化されました。", NotificationAddon::Type::Information);
 				}
 
@@ -421,20 +427,22 @@ public:
 		
 		if (m_zoominButton.leftClicked())
 		{
-			if(getData().flag == 1 && getData().zoomf < 23) getData().zoomf += 1;
-			else if(getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
+			if(getData().zoomf < 23) getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 1 && m_zoomoutButton.leftClicked())
+		if (m_zoomoutButton.leftClicked())
 		{
-			getData().zoomf -= 1;
+			if (getData().zoomf > 0) getData().zoomf -= 1;
+			else if (getData().flag == 1 && getData().zoomf > -11) getData().zoomf -= 1;
+			else NotificationAddon::Show(U"これ以上ズームアウトできません。", NotificationAddon::Type::Failure);
 		}
 	}
 
 	void draw() const override
 	{	
-		if (getData().zoomf == 0)
+		/*if (getData().zoomf == 0)
 		{	
+			
 			const double deltim = Scene::Time() - getData().tim;
 			if (!getData().zoom_lab)
 			{
@@ -456,16 +464,28 @@ public:
 				getData().zoom_lab = 0;
 				getData().zoomf = 1;
 			}
-		}
-		else if (getData().zoomf == 1) getData().texture_lab_1.draw();
-		else if (getData().zoomf == 2) getData().texture_lab_2.draw();
-		else if (getData().zoomf == 3) getData().texture_lab_3.draw();
-		else if (getData().zoomf == 4) getData().texture_lab_4.draw();
-		else if (getData().zoomf == 5) getData().texture_lab_5.draw();
-		else if (getData().zoomf == 6) getData().texture_lab_6.draw();
-		else if (getData().zoomf == 7) getData().texture_lab_7.draw();
-		else if (getData().zoomf == 8) getData().texture_lab_8.draw();
-		else if (getData().zoomf > 8) getData().texture_lab_9.scaled(pow(1.1, Min<double>(getData().zoomf - 9, 15))).draw();
+		}*/
+		if (getData().zoomf == 0) getData().texture_lab_1.draw();
+		else if (getData().zoomf == 1) getData().texture_lab_2.draw();
+		else if (getData().zoomf == 2) getData().texture_lab_3.draw();
+		else if (getData().zoomf == 3) getData().texture_lab_4.draw();
+		else if (getData().zoomf == 4) getData().texture_lab_5.draw();
+		else if (getData().zoomf == 5) getData().texture_lab_6.draw();
+		else if (getData().zoomf == 6) getData().texture_lab_7.draw();
+		else if (getData().zoomf == 7) getData().texture_lab_8.draw();
+		else if (getData().zoomf > 7) getData().texture_lab_9.scaled(pow(1.1, Min<double>(getData().zoomf - 9, 15))).drawAt(Scene::Center());
+		else if (getData().zoomf == -1) getData().texture_main_11.draw();
+		else if (getData().zoomf == -2) getData().texture_main_10.draw();
+		else if (getData().zoomf == -3) getData().texture_main_9.draw();
+		else if (getData().zoomf == -4) getData().texture_main_8.draw();
+		else if (getData().zoomf == -5) getData().texture_main_7.draw();
+		else if (getData().zoomf == -6) getData().texture_main_6.draw();
+		else if (getData().zoomf == -7) getData().texture_main_5.draw();
+		else if (getData().zoomf == -8) getData().texture_main_4.draw();
+		else if (getData().zoomf == -9) getData().texture_main_3.draw();
+		else if (getData().zoomf == -10) getData().texture_main_2.draw();
+		else if (getData().zoomf == -11) getData().texture_main_1.draw();
+
 
 		FontAsset(U"TitleFont")(U"研究所")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
@@ -520,13 +540,13 @@ public:
 
 		if (m_zoominButton.leftClicked())
 		{
-			if (getData().flag == 1 && getData().zoomf < 16) getData().zoomf += 1;
-			else if (getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
+			if (getData().zoomf < 16) getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
+		if (m_zoomoutButton.leftClicked())
 		{
-			getData().zoomf -= 1;
+			if (getData().zoomf > 0) getData().zoomf -= 1;
+			else NotificationAddon::Show(U"これ以上ズームアウトできません。", NotificationAddon::Type::Failure);
 		}
 	}
 
@@ -534,7 +554,7 @@ public:
 	{	
 		if (getData().zoomf == 0) getData().texture_volcano_1.draw();
 		else if (getData().zoomf == 1) getData().texture_volcano_2.draw();
-		else if (getData().zoomf > 1) getData().texture_volcano_3.scaled(pow(1.1, Min<double>(getData().zoomf - 2, 15))).draw();
+		else if (getData().zoomf > 1) getData().texture_volcano_3.scaled(pow(1.1, Min<double>(getData().zoomf - 2, 15))).drawAt(Scene::Center());
 
 		FontAsset(U"TitleFont")(U"火山")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
@@ -645,13 +665,13 @@ public:
 
 		if (m_zoominButton.leftClicked())
 		{
-			if (getData().flag == 1 && getData().zoomf < 16) getData().zoomf += 1;
-			else if (getData().flag == 0) NotificationAddon::Show(U"これ以上ズームインできません。", NotificationAddon::Type::Failure);
+			if (getData().zoomf < 16) getData().zoomf += 1;
 		}
 
-		if (getData().flag == 1 && getData().zoomf > 0 && m_zoomoutButton.leftClicked())
+		if (m_zoomoutButton.leftClicked())
 		{
-			getData().zoomf -= 1;
+			if(getData().zoomf > 0) getData().zoomf -= 1;
+			else NotificationAddon::Show(U"これ以上ズームアウトできません。", NotificationAddon::Type::Failure);
 		}
 	}
 
@@ -659,7 +679,7 @@ public:
 	{	
 		if (getData().zoomf == 0) getData().texture_tree_1.draw();
 		else if (getData().zoomf == 1) getData().texture_tree_2.draw();
-		else if (getData().zoomf > 1) getData().texture_tree_3.scaled(pow(1.1, Min<double>(getData().zoomf - 2, 15))).draw();
+		else if (getData().zoomf > 1) getData().texture_tree_3.scaled(pow(1.1, Min<double>(getData().zoomf - 2, 15))).drawAt(Scene::Center());
 
 		FontAsset(U"TitleFont")(U"ヤシの木")
 			.drawAt(TextStyle::OutlineShadow(0.2, ColorF{ 0.2, 0.6, 0.2 }, Vec2{ 3, 3 }, ColorF{ 0.0, 0.5 }), 100, Vec2{ 1000, 50 });
